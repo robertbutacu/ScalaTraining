@@ -1,3 +1,5 @@
+import Car.CarType
+
 /**
   * Created by r.butacu on 7/19/2017.
   */
@@ -11,4 +13,5 @@ object Main extends App {
   println("Last element : " + new ListOperations().last(a))
   println("Second to last : " + new ListOperations().secondToLast(a).getOrElse("List not long enough."))
   println("Second to last : " + new ListOperations().secondToLast2(a).getOrElse("List not long enough."))
+  println("Information about car from pre 2000 : " + Car.inspect(CarType("Camaro","Z28", 1969, 200)))
 }

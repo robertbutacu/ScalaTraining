@@ -27,7 +27,6 @@ class ListOperations {
       case Nil | _ :: Nil => None
       case h1 :: h2 :: Nil => Some(h1)
       case h1 :: h2 :: tail => secondToLast2(tail)
-
     }
   }
 
