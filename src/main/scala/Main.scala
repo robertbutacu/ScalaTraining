@@ -8,5 +8,5 @@ object Main extends App {
   println(a.foldLeft(0)(new ListOperations().last))
 
   println(new ListOperations().getLast(a))
-
+  println(new ListOperations().getSecondToLast(a))
 }

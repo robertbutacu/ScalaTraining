@@ -13,4 +13,11 @@ class ListOperations {
     }
   }
 
+  def getSecondToLast(a : List[Int]) : Int = {
+    a.size match{
+      case 2 => a.head
+      case _ => getSecondToLast(a.tail)
+    }
+  }
+
 }
