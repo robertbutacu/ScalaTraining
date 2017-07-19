@@ -3,9 +3,10 @@
   */
 object ListOperations {
 
-  def last(a: List[Int]): Int = {
+  def last(a: List[Int]): Option[Int] = {
     a match {
-      case h :: Nil => h
+      case Nil => None
+      case h :: Nil => Some(h)
       case h :: t => last(t)
     }
   }
@@ -29,4 +30,25 @@ object ListOperations {
       case h1 :: h2 :: tail => secondToLast2(tail)
     }
   }
+
+  def nth(index: Int, a: List[Int]): Option[Int] = {
+    if (a.isEmpty)
+      None
+    else
+      index match {
+        case 0 => Some(a.head)
+        case _ => nth(index - 1, a.tail)
+      }
+  }
+
+  //sth fishy here
+  def reverse(a: List[Int]): List[Int] = {
+    a match {
+      case Nil => Nil
+      case _ => reverse(a.tail) ++ List(a.head)
+    }
+  }
+
+  def isPalindrome(a: List[Int]): Boolean = a.equals(this.reverse(a))
+
 }
