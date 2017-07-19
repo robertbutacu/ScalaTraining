@@ -29,7 +29,4 @@ object ListOperations {
       case h1 :: h2 :: tail => secondToLast2(tail)
     }
   }
-
-
-
 }

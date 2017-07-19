@@ -13,5 +13,5 @@ object Main extends App {
   println("Last element : " + ListOperations.last(a))
   println("Second to last : " + ListOperations.secondToLast(a).getOrElse("List not long enough."))
   println("Second to last : " + ListOperations.secondToLast2(a).getOrElse("List not long enough."))
-  println("Information about car from pre 2000 : " + Car.inspect(CarType("Camaro","Z28", 1969, 200)))
+  println("Information about car from pre 2000 : " + Car.inspect(CarType("Camaro", "Z28", 1969, 200)))
 }

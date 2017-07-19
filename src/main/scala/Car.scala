@@ -14,6 +14,4 @@ object Car {
       case CarType(_, _, _, _) => "Idk"
     }
   }
-
-
 }
