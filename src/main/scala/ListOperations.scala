@@ -1,7 +1,7 @@
 /**
   * Created by r.butacu on 7/19/2017.
   */
-class ListOperations {
+object ListOperations {
 
   def last(a: List[Int]): Int = {
     a match {
