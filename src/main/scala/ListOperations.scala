@@ -69,6 +69,18 @@ object ListOperations {
     go(pack(input), Nil)
   }
 
+  def decode(input : List[Tuple2[Int, Symbol]]) : List[Symbol] = {
+    @tailrec
+    def go(input : List[Tuple2[Int, Symbol]], result : List[Symbol]) : List[Symbol] = {
+      input match {
+        case Nil => result
+        case (count, symbol) :: tail if count == 0 => go(tail, result)
+        case (count, symbol) :: tail if count > 0 => go((count - 1, symbol) :: tail, result.:+(symbol))
+      }
+    }
+    go(input, Nil)
+  }
+
 
   @tailrec
   def secondToLast(a: List[Int]): Option[Int] = {

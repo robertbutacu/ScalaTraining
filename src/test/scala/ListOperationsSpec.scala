@@ -80,5 +80,9 @@ class ListOperationsSpec extends FlatSpec {
   it should "encode lists" in {
     assert(ListOperations.encode(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) === List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e)))
   }
+  it should "decode lists" in {
+    assert(ListOperations.decode(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e))) === List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
+    assert(ListOperations.decode(List()) === List())
+  }
 
 }
