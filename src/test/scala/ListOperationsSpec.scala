@@ -42,5 +42,25 @@ class ListOperationsSpec extends FlatSpec {
   it should "return none on empty lists(last function)" in {
     assert(ListOperations.last(Nil) === None)
   }
-
+  it should "return second to last (secondToLast)" in {
+    assert(ListOperations.secondToLast(List(1, 2, 3)).get === 2)
+  }
+  it should "return none on secondToLast function" in {
+    assert(ListOperations.secondToLast(List(1)) === None)
+    assert(ListOperations.secondToLast(List()) === None)
+  }
+  it should "return second to last (secondToLast2)" in {
+    assert(ListOperations.secondToLast2(List(1, 2, 3)).get === 2)
+  }
+  it should "return none on secondToLast2 function" in {
+    assert(ListOperations.secondToLast2(List(1)) === None)
+    assert(ListOperations.secondToLast2(List()) === None)
+  }
+  it should "return last element(last function)" in {
+    assert(ListOperations.last(List(1, 2, 3)).get === 3)
+    assert(ListOperations.last(List(1)).get === 1)
+  }
+  it should "return none(last function)" in {
+    assert(ListOperations.last(Nil) === None)
+  }
 }

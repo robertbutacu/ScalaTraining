@@ -15,7 +15,7 @@ object ListOperations {
   }
 
   def last2(a: Int, b: Int): Int = {
-    b
+    a
   }
 
   @tailrec
@@ -32,7 +32,7 @@ object ListOperations {
     a match {
       case Nil | _ :: Nil => None
       case h1 :: h2 :: Nil => Some(h1)
-      case h1 :: h2 :: tail => secondToLast2(tail)
+      case h1 :: h2 :: tail => secondToLast2(h2 :: tail)
     }
   }
 
