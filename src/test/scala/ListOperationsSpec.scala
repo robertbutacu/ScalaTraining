@@ -63,4 +63,9 @@ class ListOperationsSpec extends FlatSpec {
   it should "return none(last function)" in {
     assert(ListOperations.last(Nil) === None)
   }
+
+  it should "flatten list" in{
+    assert(ListOperations.flatten(List(List(1,2,3),4,3,List(123))) === List(1,2,3,4,3,123))
+    assert(ListOperations.flatten(List(1,2,3,4,5,6)) === List(1,2,3,4,5,6))
+  }
 }

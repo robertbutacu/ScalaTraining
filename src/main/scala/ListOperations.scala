@@ -18,6 +18,18 @@ object ListOperations {
     a
   }
 
+  def flatten[A](input : List[A]) : List[A] ={
+    @tailrec
+    def go(input : List[A], output : List[A]) : List[A] ={
+      input match{
+        case Nil => output
+        case (h : List[A]) :: tail => go(tail, output ::: flatten(h))
+        case (h: A) :: tail => go(tail, output.:+(h))
+      }
+    }
+    go(input, Nil)
+  }
+
   @tailrec
   def secondToLast(a: List[Int]): Option[Int] = {
     a.size match {
