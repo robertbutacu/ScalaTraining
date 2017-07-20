@@ -71,4 +71,7 @@ class ListOperationsSpec extends FlatSpec {
     assert(ListOperations.compress(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) === List('a, 'b, 'c, 'a, 'd, 'e))
     assert(ListOperations.compress(List('a,'b,'c,'d)) === List('a,'b,'c,'d))
   }
+  it should "pack duplicates " in {
+    assert(ListOperations.pack(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) === List(List('a, 'a, 'a, 'a), List('b), List('c, 'c), List('a, 'a), List('d), List('e, 'e, 'e, 'e)))
+  }
 }

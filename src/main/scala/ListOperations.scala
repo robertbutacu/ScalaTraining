@@ -32,12 +32,22 @@ object ListOperations {
     go(input, Nil)
   }
 
+  //TODO tailrec
   def compress(input: List[Symbol]): List[Symbol] = {
     input match {
       case Nil => Nil
       case t :: Nil => List(t)
       case (h: Symbol) :: (t: Symbol) :: (tail: List[Symbol]) if h == t => compress(t :: tail)
-      case h :: tail => h::compress(tail)
+      case h :: tail => h :: compress(tail)
+    }
+  }
+
+  def pack(input: List[Any]): List[List[Symbol]] = {
+    input match {
+      case Nil => print("first");List()
+      case (t: List[Symbol]) :: (h: Symbol) :: tail if t.head == h => print("second");pack(t.:+(h) ::: tail)
+      case (t: Symbol) :: (h: Symbol) :: tail if t == h => print("third");List(t, h)::pack(tail)
+      case (t: Symbol) :: tail => print("forth");List(t)::pack(tail)
     }
   }
 
