@@ -1,4 +1,5 @@
 import scala.annotation.tailrec
+import scala.reflect.ClassTag
 
 /**
   * Created by r.butacu on 7/19/2017.
@@ -18,17 +19,28 @@ object ListOperations {
     a
   }
 
-  def flatten[A](input : List[A]) : List[A] ={
+  def flatten[T: ClassTag](input: List[T]): List[T] = {
     @tailrec
-    def go(input : List[A], output : List[A]) : List[A] ={
-      input match{
+    def go[T: ClassTag](input: List[T], output: List[T]): List[T] = {
+      input match {
         case Nil => output
-        case (h : List[A]) :: tail => go(tail, output ::: flatten(h))
-        case (h: A) :: tail => go(tail, output.:+(h))
+        case (h: List[T]) :: (tail: List[T]) => go(tail, output ::: flatten(h))
+        case (h: T) :: (tail: List[T]) => go(tail, output.:+(h))
       }
     }
+
     go(input, Nil)
   }
+
+  def compress(input: List[Symbol]): List[Symbol] = {
+    input match {
+      case Nil => Nil
+      case t :: Nil => List(t)
+      case (h: Symbol) :: (t: Symbol) :: (tail: List[Symbol]) if h == t => compress(t :: tail)
+      case h :: tail => h::compress(tail)
+    }
+  }
+
 
   @tailrec
   def secondToLast(a: List[Int]): Option[Int] = {
