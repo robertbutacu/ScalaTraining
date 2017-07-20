@@ -1,8 +1,11 @@
+import scala.annotation.tailrec
+
 /**
   * Created by r.butacu on 7/19/2017.
   */
 object ListOperations {
 
+  @tailrec
   def last(a: List[Int]): Option[Int] = {
     a match {
       case Nil => None
@@ -15,6 +18,7 @@ object ListOperations {
     b
   }
 
+  @tailrec
   def secondToLast(a: List[Int]): Option[Int] = {
     a.size match {
       case invalid if invalid < 2 => None
@@ -23,6 +27,7 @@ object ListOperations {
     }
   }
 
+  @tailrec
   def secondToLast2(a: List[Int]): Option[Int] = {
     a match {
       case Nil | _ :: Nil => None
@@ -31,6 +36,7 @@ object ListOperations {
     }
   }
 
+  @tailrec
   def nth(index: Int, a: List[Int]): Option[Int] = {
     if (a.isEmpty)
       None
@@ -41,12 +47,16 @@ object ListOperations {
       }
   }
 
-  //sth fishy here
+
   def reverse(a: List[Int]): List[Int] = {
-    a match {
-      case Nil => Nil
-      case _ => reverse(a.tail) ++ List(a.head)
+    @tailrec
+    def go(input : List[Int], accum : List[Int]) : List[Int] = {
+      input match {
+        case Nil => accum
+        case _ => go(input.tail, accum.+:(input.head))
+      }
     }
+    go(a, Nil)
   }
 
   def isPalindrome(a: List[Int]): Boolean = a.equals(this.reverse(a))
