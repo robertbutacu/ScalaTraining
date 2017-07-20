@@ -77,5 +77,8 @@ class ListOperationsSpec extends FlatSpec {
     assert(ListOperations.pack(List('a)) === List(List('a)))
     assert(ListOperations.pack(List('a, 'b, 'c)) === List(List('a), List('b), List('c)))
   }
+  it should "encode lists" in {
+    assert(ListOperations.encode(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) === List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e)))
+  }
 
 }

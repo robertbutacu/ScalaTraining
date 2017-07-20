@@ -1,6 +1,4 @@
 import scala.annotation.tailrec
-import scala.reflect.ClassTag
-
 /**
   * Created by r.butacu on 7/19/2017.
   */
@@ -19,13 +17,13 @@ object ListOperations {
     a
   }
 
-  def flatten[T: ClassTag](input: List[T]): List[T] = {
+  def flatten[AnyVal](input: List[AnyVal]): List[AnyVal] = {
     @tailrec
-    def go[T: ClassTag](input: List[T], output: List[T]): List[T] = {
+    def go[AnyVal](input: List[AnyVal], output: List[AnyVal]): List[AnyVal] = {
       input match {
         case Nil => output
-        case (h: List[T]) :: (tail: List[T]) => go(tail, output ::: flatten(h))
-        case (h: T) :: (tail: List[T]) => go(tail, output.:+(h))
+        case (h: List[AnyVal]) :: (tail: List[AnyVal]) => go(tail, output ::: flatten(h))
+        case (h: AnyVal) :: (tail: List[AnyVal]) => go(tail, output.:+(h))
       }
     }
 
@@ -57,6 +55,18 @@ object ListOperations {
       //List(a,something)
       case (t: Symbol) :: tail => List(t) :: pack(tail)
     }
+  }
+
+  def encode(input: List[Symbol]): List[Tuple2[Int, Symbol]] = {
+    @tailrec
+    def go(input: List[List[Symbol]], result: List[Tuple2[Int, Symbol]]): List[Tuple2[Int, Symbol]] = {
+      input match {
+        case Nil => result
+        case (t: List[Symbol]) :: tail => go(tail, result.:+((t.size, t.head)))
+      }
+    }
+
+    go(pack(input), Nil)
   }
 
 
