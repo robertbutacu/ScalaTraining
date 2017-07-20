@@ -50,13 +50,21 @@ object ListOperations {
 
   def reverse(a: List[Int]): List[Int] = {
     @tailrec
-    def go(input : List[Int], accum : List[Int]) : List[Int] = {
+    def go(input: List[Int], accum: List[Int]): List[Int] = {
       input match {
         case Nil => accum
         case _ => go(input.tail, accum.+:(input.head))
       }
     }
+
     go(a, Nil)
+  }
+
+  def badReverse(a: List[Int]): List[Int] = {
+    a match {
+      case Nil => Nil
+      case _ => reverse(a.tail) ++ List(a.head)
+    }
   }
 
   def isPalindrome(a: List[Int]): Boolean = a.equals(this.reverse(a))

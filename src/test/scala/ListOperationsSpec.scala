@@ -1,0 +1,46 @@
+import org.scalatest.FlatSpec
+
+/**
+  * Created by r.butacu on 7/20/2017.
+  */
+class ListOperationsSpec extends FlatSpec {
+  "A list" should "be reversed after calling reverse function" in {
+    assert(ListOperations.reverse(List(1, 2, 3)) === List(3, 2, 1))
+    assert(ListOperations.reverse(List(1)) === List(1))
+  }
+  it should "return empty list when calling on empty list" in {
+    assert(ListOperations.reverse(Nil) === List())
+  }
+  it should "return empty list when calling on empty list(badReverse)" in {
+    assert(ListOperations.badReverse(Nil) === List())
+  }
+  it should "be reversed after calling badReverse function" in {
+    assert(ListOperations.badReverse(List(1, 2, 3, 4, 5, 6, 7)) === List(7, 6, 5, 4, 3, 2, 1))
+    assert(ListOperations.badReverse(List(1)) === List(1))
+  }
+  it should "return true after calling isPalindrome function on palindrome list" in {
+    assert(ListOperations.isPalindrome(List(1, 2, 3, 3, 2, 1)) === true)
+    assert(ListOperations.isPalindrome(List(1)) === true)
+    assert(ListOperations.isPalindrome(List()) === true)
+  }
+  it should "return false after calling isPalindrome on non-palindrome list " in {
+    assert(ListOperations.isPalindrome(List(1, 2, 3)) === false)
+
+  }
+  it should "return nth element after nth function is called" in {
+    assert(ListOperations.nth(2, List(1, 2, 3)).get === 3)
+    assert(ListOperations.nth(0, List(1, 2, 3)).get === 1)
+  }
+  it should "return none on invalid input (nth function)" in {
+    assert(ListOperations.nth(3, List(1, 2)) === None)
+    assert(ListOperations.nth(5, Nil) === None)
+  }
+  it should "return last element after last function is called(last function)" in {
+    assert(ListOperations.last(List(1, 2, 3)).get === 3)
+    assert(ListOperations.last(List(1)).get === 1)
+  }
+  it should "return none on empty lists(last function)" in {
+    assert(ListOperations.last(Nil) === None)
+  }
+
+}
