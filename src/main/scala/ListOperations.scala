@@ -44,10 +44,18 @@ object ListOperations {
 
   def pack(input: List[Any]): List[List[Symbol]] = {
     input match {
-      case Nil => print("first");List()
-      case (t: List[Symbol]) :: (h: Symbol) :: tail if t.head == h => print("second");pack(t.:+(h) ::: tail)
-      case (t: Symbol) :: (h: Symbol) :: tail if t == h => print("third");List(t, h)::pack(tail)
-      case (t: Symbol) :: tail => print("forth");List(t)::pack(tail)
+      //empty list
+      case Nil => List()
+      //List(List(a,a,...),a,something)
+      case (t: List[Symbol]) :: (h: Symbol) :: tail if t.head == h => pack(t.:+(h) :: tail)
+      //List(List(a,a,...),b,something)
+      case (t: List[Symbol]) :: (h: Symbol) :: tail if t.head != h => t :: pack(h :: tail)
+      //List(List(a,a,...),Nil)
+      case (t: List[Symbol]) :: Nil => List(t)
+      //List(a,a,something)
+      case (t: Symbol) :: (h: Symbol) :: tail if t == h => pack(List(t, h) :: tail)
+      //List(a,something)
+      case (t: Symbol) :: tail => List(t) :: pack(tail)
     }
   }
 
