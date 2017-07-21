@@ -34,7 +34,6 @@ object ListOperations {
   def compress(input: List[Symbol]): List[Symbol] = {
     input match {
       case Nil => Nil
-      case t :: Nil => List(t)
       case h  :: t :: tail if h == t => compress(t :: tail)
       case h :: tail => h :: compress(tail)
     }
