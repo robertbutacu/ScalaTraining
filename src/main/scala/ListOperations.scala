@@ -19,7 +19,7 @@ object ListOperations {
 
   def flatten[AnyVal](input: List[AnyVal]): List[AnyVal] = {
     @tailrec
-    def go[AnyVal](input: List[AnyVal], output: List[AnyVal]): List[AnyVal] = {
+    def go(input: List[AnyVal], output: List[AnyVal]): List[AnyVal] = {
       input match {
         case Nil => output
         case (h: List[AnyVal]) :: (tail: List[AnyVal]) => go(tail, output ::: flatten(h))
@@ -35,7 +35,7 @@ object ListOperations {
     input match {
       case Nil => Nil
       case t :: Nil => List(t)
-      case (h: Symbol) :: (t: Symbol) :: (tail: List[Symbol]) if h == t => compress(t :: tail)
+      case h  :: t :: tail if h == t => compress(t :: tail)
       case h :: tail => h :: compress(tail)
     }
   }
@@ -99,6 +99,32 @@ object ListOperations {
       case h1 :: h2 :: tail => secondToLast2(h2 :: tail)
     }
   }
+
+  def firstSplit(index : Int, list : List[Int]) : Option[List[Int]] = {
+  if( index > list.size)
+    Some(list)
+  else
+    index match {
+      case 0 => None
+      case _ => Some(List(list.head) ::: firstSplit(index - 1, list.tail).getOrElse(Nil))
+    }
+  }
+
+  def secondSplit(index : Int, list : List[Int]) : Option[List[Int]] = {
+    if(index > list.size)
+      None
+    else
+      index match {
+        case 0 => Some(list)
+        case _ => secondSplit(index - 1, list.tail)
+      }
+  }
+
+
+  def split(index : Int, list : List[Int]) : Option[List[Any]] = {
+    Option(firstSplit(index, list).getOrElse(Nil) :: List(secondSplit(index, list).getOrElse(Nil)))
+  }
+
 
   @tailrec
   def nth(index: Int, a: List[Int]): Option[Int] = {

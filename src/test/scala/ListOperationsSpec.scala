@@ -84,5 +84,11 @@ class ListOperationsSpec extends FlatSpec {
     assert(ListOperations.decode(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e))) === List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
     assert(ListOperations.decode(List()) === List())
   }
+  it should "split the list" in {
+    assert(ListOperations.split(3, List(1,2,3,4,5,6)).getOrElse(Nil) === List(List(1,2,3),List(4,5,6)))
+  }
+  it should "not split the list" in {
+    assert(ListOperations.split(10,List(1,2,3)).get === List(List(1,2,3), List()))
+  }
 
 }
