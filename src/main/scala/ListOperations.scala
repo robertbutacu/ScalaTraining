@@ -56,6 +56,17 @@ object ListOperations {
     }
   }
 
+  def pack2(input : List[Symbol]) : List[List[Symbol]] = {
+      val (packed, next) = input.span(_ == input.head)
+      if(next.isEmpty) List(packed)
+      else
+        packed :: pack2(next)
+  }
+
+  def encode2(input : List[Symbol]) : List[Tuple2[Int, Symbol]] = {
+    pack2(input).map{el : List[Symbol] => (el.size, el.head)}
+  }
+
   def encode(input: List[Symbol]): List[Tuple2[Int, Symbol]] = {
     @tailrec
     def go(input: List[List[Symbol]], result: List[Tuple2[Int, Symbol]]): List[Tuple2[Int, Symbol]] = {

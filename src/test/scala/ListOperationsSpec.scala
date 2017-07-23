@@ -77,8 +77,17 @@ class ListOperationsSpec extends FlatSpec {
     assert(ListOperations.pack(List('a)) === List(List('a)))
     assert(ListOperations.pack(List('a, 'b, 'c)) === List(List('a), List('b), List('c)))
   }
+  it should "pack2 duplicates " in {
+    assert(ListOperations.pack2(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) === List(List('a, 'a, 'a, 'a), List('b), List('c, 'c), List('a, 'a), List('d), List('e, 'e, 'e, 'e)))
+    assert(ListOperations.pack2(List()) === List(List()))
+    assert(ListOperations.pack2(List('a)) === List(List('a)))
+    assert(ListOperations.pack2(List('a, 'b, 'c)) === List(List('a), List('b), List('c)))
+  }
   it should "encode lists" in {
     assert(ListOperations.encode(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) === List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e)))
+  }
+  it should "encode2 lists" in {
+    assert(ListOperations.encode2(List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)) === List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e)))
   }
   it should "decode lists" in {
     assert(ListOperations.decode(List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e))) === List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e))
