@@ -1,10 +1,9 @@
 /**
   * Created by r.butacu on 7/19/2017.
   */
+case class CarType(company: String, model: String, year: Int, topSpeed: Double)
+
 object Car {
-
-  case class CarType(company: String, model: String, year: Int, topSpeed: Double)
-
   def inspect(car: CarType): String = {
     car match {
       case CarType("Ferrari", _, _, _) => "Sleek"
