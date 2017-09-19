@@ -1,4 +1,5 @@
 import scala.math.sqrt
+import Stream._
 /**
   * Created by Robert-PC on 9/19/2017.
   */
@@ -12,6 +13,12 @@ object Arithmetic {
         !(3 to sqrt(x.toDouble).floor.toInt by 2).toArray.exists(x % _ == 0)
     }
   }
+
+  def isPrime(x: Int): Boolean = {
+    (x > BigInt(2)) && (primes takeWhile { _ <= Math.sqrt(x.toInt)} forall (x % _ != 0))
+  }
+
+  lazy val primes: Stream[Int] = Stream.cons(2, Stream.from(3,2).filter{x: Int => isPrime(x)})
 
   /*
     List(1,2,3,4,5,6)

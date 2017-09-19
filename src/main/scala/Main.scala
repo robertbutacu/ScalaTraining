@@ -3,5 +3,5 @@
   */
 object Main extends App {
   println(Arithmetic.fibs take 5 toList)
-
+  println(Arithmetic.isPrime(5))
 }
