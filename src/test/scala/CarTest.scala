@@ -1,4 +1,3 @@
-import Car.CarType
 import org.scalatest.FunSuite
 
 /**
