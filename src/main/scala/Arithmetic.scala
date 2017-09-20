@@ -1,24 +1,35 @@
 import scala.math.sqrt
 import Stream._
+
 /**
   * Created by Robert-PC on 9/19/2017.
   */
 object Arithmetic {
   def isPrime1(x: Int): Boolean = {
     x match {
-      case _ if x < 2 => false
-      case 2 => true
+      case _ if x < 2      => false
+      case 2               => true
       case _ if x % 2 == 0 => false
-      case _ =>
+      case _               =>
         !(3 to sqrt(x.toDouble).floor.toInt by 2).toArray.exists(x % _ == 0)
     }
   }
 
   def isPrime(x: Int): Boolean = {
-    (x > 2) && (primes takeWhile { _ <= Math.sqrt(x.toInt)} forall (x % _ != 0))
+    (x > 2) && (primes takeWhile {
+      _ <= Math.sqrt(x.toInt)
+    } forall (x % _ != 0))
   }
 
-  lazy val primes: Stream[Int] = Stream.cons(2, Stream.from(3,2).filter{x: Int => isPrime(x)})
+  lazy val primes: Stream[Int] = Stream.cons(2, Stream.from(3, 2).filter { x: Int => isPrime(x) })
+
+  def gcd(x: Int, y: Int): Int = {
+    if (y == 0)
+      x
+    else
+      gcd(y, x % y)
+  }
+
 
   /*
     List(1,2,3,4,5,6)
