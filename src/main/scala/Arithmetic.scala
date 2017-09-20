@@ -30,6 +30,15 @@ object Arithmetic {
       gcd(y, x % y)
   }
 
+  def isCoprime(x: Int, y: Int): Boolean = {
+    if(gcd(x, y) == 1)
+      true
+    else
+      false
+  }
+
+  def totient(m: Int): Int = (1 to m).filter(isCoprime(m, _)).size
+
 
   /*
     List(1,2,3,4,5,6)
