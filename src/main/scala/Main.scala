@@ -3,4 +3,5 @@
   */
 object Main extends App {
   println(Arithmetic.totient(10))
+  println(Arithmetic.listPrimesInRange(7 to 31))
 }

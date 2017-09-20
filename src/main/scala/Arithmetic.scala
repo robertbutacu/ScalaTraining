@@ -23,6 +23,10 @@ object Arithmetic {
 
   lazy val primes: Stream[Int] = Stream.cons(2, Stream.from(3, 2).filter { x: Int => isPrime(x) })
 
+  def listPrimesInRange(range: Range): List[Int] = {
+    primes dropWhile { _ <= range.start } takeWhile { _ <= range.end} toList
+  }
+
   def gcd(x: Int, y: Int): Int = {
     if (y == 0)
       x
@@ -37,7 +41,7 @@ object Arithmetic {
       false
   }
 
-  def totient(m: Int): Int = (1 to m).filter(isCoprime(m, _)).size
+  def totient(m: Int): Int = (1 to m).count(isCoprime(m, _))
 
 
   /*
