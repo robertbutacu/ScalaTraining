@@ -1,6 +1,8 @@
 import scala.math.sqrt
 import Stream._
 
+case class InvalidInputException(msg: String)
+
 /**
   * Created by Robert-PC on 9/19/2017.
   */
@@ -32,6 +34,24 @@ object Arithmetic {
       x
     else
       gcd(y, x % y)
+  }
+
+  def printGoldbachList(range: Range) {
+    range.toList.filter(_ % 2 == 0)
+      .foreach(
+        even =>
+          goldbach(even) match {
+            case Left((x, y)) => println(even + " = " + x + " + " + y)
+            case _            =>
+          }
+      )
+  }
+
+  def goldbach(x: Int): Either[(Int, Int), InvalidInputException] = {
+    primes takeWhile { _ < x } find { p => isPrime(x - p)} match {
+      case None     => Right(InvalidInputException("Not found!"))
+      case Some(p1) => Left((p1, x - p1))
+    }
   }
 
   def isCoprime(x: Int, y: Int): Boolean = {
