@@ -1,4 +1,5 @@
 import scala.annotation.tailrec
+
 /**
   * Created by r.butacu on 7/19/2017.
   */
@@ -34,7 +35,7 @@ object ListOperations {
   def compress(input: List[Symbol]): List[Symbol] = {
     input match {
       case Nil => Nil
-      case h  :: t :: tail if h == t => compress(t :: tail)
+      case h :: t :: tail if h == t => compress(t :: tail)
       case h :: tail => h :: compress(tail)
     }
   }
@@ -56,15 +57,15 @@ object ListOperations {
     }
   }
 
-  def pack2(input : List[Symbol]) : List[List[Symbol]] = {
-      val (packed, next) = input.span(_ == input.head)
-      if(next.isEmpty) List(packed)
-      else
-        packed :: pack2(next)
+  def pack2(input: List[Symbol]): List[List[Symbol]] = {
+    val (packed, next) = input.span(_ == input.head)
+    if (next.isEmpty) List(packed)
+    else
+      packed :: pack2(next)
   }
 
-  def encode2(input : List[Symbol]) : List[Tuple2[Int, Symbol]] = {
-    pack2(input).map{el : List[Symbol] => (el.size, el.head)}
+  def encode2(input: List[Symbol]): List[Tuple2[Int, Symbol]] = {
+    pack2(input).map { el: List[Symbol] => (el.size, el.head) }
   }
 
   def encode(input: List[Symbol]): List[Tuple2[Int, Symbol]] = {
@@ -79,15 +80,16 @@ object ListOperations {
     go(pack(input), Nil)
   }
 
-  def decode(input : List[Tuple2[Int, Symbol]]) : List[Symbol] = {
+  def decode(input: List[(Int, Symbol)]): List[Symbol] = {
     @tailrec
-    def go(input : List[Tuple2[Int, Symbol]], result : List[Symbol]) : List[Symbol] = {
+    def go(input: List[(Int, Symbol)], result: List[Symbol]): List[Symbol] = {
       input match {
         case Nil => result
         case (count, symbol) :: tail if count == 0 => go(tail, result)
         case (count, symbol) :: tail if count > 0 => go((count - 1, symbol) :: tail, result.:+(symbol))
       }
     }
+
     go(input, Nil)
   }
 
@@ -110,18 +112,18 @@ object ListOperations {
     }
   }
 
-  def firstSplit(index : Int, list : List[Int]) : Option[List[Int]] = {
-  if( index > list.size)
-    Some(list)
-  else
-    index match {
-      case 0 => None
-      case _ => Some(List(list.head) ::: firstSplit(index - 1, list.tail).getOrElse(Nil))
-    }
+  def firstSplit(index: Int, list: List[Int]): Option[List[Int]] = {
+    if (index > list.size)
+      Some(list)
+    else
+      index match {
+        case 0 => None
+        case _ => Some(List(list.head) ::: firstSplit(index - 1, list.tail).getOrElse(Nil))
+      }
   }
 
-  def secondSplit(index : Int, list : List[Int]) : Option[List[Int]] = {
-    if(index > list.size)
+  def secondSplit(index: Int, list: List[Int]): Option[List[Int]] = {
+    if (index > list.size)
       None
     else
       index match {
@@ -131,7 +133,7 @@ object ListOperations {
   }
 
 
-  def split(index : Int, list : List[Int]) : Option[List[Any]] = {
+  def split(index: Int, list: List[Int]): Option[List[Any]] = {
     Option(firstSplit(index, list).getOrElse(Nil) :: List(secondSplit(index, list).getOrElse(Nil)))
   }
 
@@ -169,4 +171,40 @@ object ListOperations {
 
   def isPalindrome(a: List[Int]): Boolean = a.equals(this.reverse(a))
 
+  //  P19 (**) Rotate a list N places to the left.
+
+  /*
+    Issues with this approach:
+      1. fails on lists with less than 2 elements
+      2. too many transformations
+   */
+  def rotateWrong[A](times: Int, list: List[A]): List[A] = {
+    require(times != 0)
+
+    val toTheLeft = if (times < 0) true else false
+    (1 to Math.abs(times)).foldRight(list) { (_, currList) =>
+      if (toTheLeft) currList.tail :+ currList.head
+      else currList.init :+ currList.last
+    }
+  }
+
+  def rotateRight[A](times: Int, list: List[A]): List[A] = {
+    require(times != 0)
+    val isPositive = if (times > 0) true else false
+
+    def getSliceIndex(length: Int): Int = {
+      if (isPositive) Math.abs(times) % length
+      else length - (Math.abs(times) % length)
+    }
+
+    list.length match {
+      case 0 => List.empty
+      case 1 => list
+      case length =>
+        val sliceIndex = getSliceIndex(length)
+        val (first, second) = list.splitAt(sliceIndex)
+
+        second ::: first
+    }
+  }
 }
