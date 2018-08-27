@@ -1,5 +1,7 @@
+package ninety.nine.scala.problems
+
+import scala.Stream._
 import scala.math.sqrt
-import Stream._
 
 case class InvalidInputException(msg: String)
 

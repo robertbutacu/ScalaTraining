@@ -1,12 +1,11 @@
+package ninety.nine.scala.problems
+
 /**
   * Created by Robert-PC on 9/20/2017.
   */
 object LogicAndCodes {
 
-  def not(first: Boolean): Boolean = first match{
-    case true  => false
-    case false => true
-  }
+  def not(first: Boolean): Boolean = if(first) false else true
 
   def and(first: Boolean, second: Boolean): Boolean = {
     (first, second) match {

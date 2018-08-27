@@ -1,7 +1,9 @@
-import scala.concurrent.duration._
-import scala.concurrent.{Await, Future, duration}
-import scala.util.{Failure, Random, Success}
+package ninety.nine.scala.problems
+
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
+import scala.concurrent.{Await, Future}
+import scala.util.{Failure, Random, Success}
 
 /**
   * Created by Robert-PC on 7/23/2017.

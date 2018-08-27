@@ -1,3 +1,4 @@
+import ninety.nine.scala.problems.{Car, CarType}
 import org.scalatest.FunSuite
 
 /**

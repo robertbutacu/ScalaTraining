@@ -1,3 +1,5 @@
+package ninety.nine.scala.problems
+
 /**
   * Created by r.butacu on 7/19/2017.
   */

@@ -1,3 +1,4 @@
+import ninety.nine.scala.problems.ListOperations
 import org.scalatest.FlatSpec
 
 /**

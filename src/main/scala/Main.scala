@@ -1,3 +1,5 @@
+import ninety.nine.scala.problems.Arithmetic
+
 /**
   * Created by r.butacu on 7/19/2017.
   */
