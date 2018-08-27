@@ -20,20 +20,19 @@ object ListOperations {
     a
   }
 
-  def flatten[AnyVal](input: List[AnyVal]): List[AnyVal] = {
+  def flatten[A](input: List[A]): List[A] = {
     @tailrec
-    def go(input: List[AnyVal], output: List[AnyVal]): List[AnyVal] = {
+    def go(input: List[A], output: List[A]): List[A] = {
       input match {
         case Nil => output
-        case (h: List[AnyVal]) :: (tail: List[AnyVal]) => go(tail, output ::: flatten(h))
-        case (h: AnyVal) :: (tail: List[AnyVal]) => go(tail, output.:+(h))
+        case (h: List[A]) :: (tail: List[A]) => go(tail, output ::: flatten(h))
+        case (h: A) :: (tail: List[A]) => go(tail, output.:+(h))
       }
     }
 
     go(input, Nil)
   }
 
-  //TODO tailrec
   def compress(input: List[Symbol]): List[Symbol] = {
     input match {
       case Nil => Nil
@@ -42,20 +41,20 @@ object ListOperations {
     }
   }
 
-  def pack(input: List[Any]): List[List[Symbol]] = {
+  def pack[A](input: List[A]): List[List[A]] = {
     input match {
       //empty list
       case Nil => List()
       //List(List(a,a,...),a,something)
-      case (t: List[Symbol]) :: (h: Symbol) :: tail if t.head == h => pack(t.:+(h) :: tail)
+      case (t: List[A]) :: (h: A) :: tail if t.head == h => pack(t.:+(h) ::: tail)
       //List(List(a,a,...),b,something)
-      case (t: List[Symbol]) :: (h: Symbol) :: tail if t.head != h => t :: pack(h :: tail)
+      case (t: List[A]) :: (h: A) :: tail if t.head != h => t :: pack(h :: tail)
       //List(List(a,a,...),Nil)
-      case (t: List[Symbol]) :: Nil => List(t)
+      case (t: List[A]) :: Nil => List(t)
       //List(a,a,something)
-      case (t: Symbol) :: (h: Symbol) :: tail if t == h => pack(List(t, h) :: tail)
+      case t :: h :: tail if t == h => pack(List(t, h) ::: tail)
       //List(a,something)
-      case (t: Symbol) :: tail => List(t) :: pack(tail)
+      case (t: A) :: tail => List(t) :: pack(tail)
     }
   }
 
@@ -66,13 +65,13 @@ object ListOperations {
       packed :: pack2(next)
   }
 
-  def encode2(input: List[Symbol]): List[Tuple2[Int, Symbol]] = {
+  def encode2(input: List[Symbol]): List[(Int, Symbol)] = {
     pack2(input).map { el: List[Symbol] => (el.size, el.head) }
   }
 
-  def encode(input: List[Symbol]): List[Tuple2[Int, Symbol]] = {
+  def encode(input: List[Symbol]): List[(Int, Symbol)] = {
     @tailrec
-    def go(input: List[List[Symbol]], result: List[Tuple2[Int, Symbol]]): List[Tuple2[Int, Symbol]] = {
+    def go(input: List[List[Symbol]], result: List[(Int, Symbol)]): List[(Int, Symbol)] = {
       input match {
         case Nil => result
         case (t: List[Symbol]) :: tail => go(tail, result.:+((t.size, t.head)))
@@ -87,7 +86,7 @@ object ListOperations {
     def go(input: List[(Int, Symbol)], result: List[Symbol]): List[Symbol] = {
       input match {
         case Nil => result
-        case (count, symbol) :: tail if count == 0 => go(tail, result)
+        case (count, _) :: tail if count == 0 => go(tail, result)
         case (count, symbol) :: tail if count > 0 => go((count - 1, symbol) :: tail, result.:+(symbol))
       }
     }
@@ -109,8 +108,8 @@ object ListOperations {
   def secondToLast2(a: List[Int]): Option[Int] = {
     a match {
       case Nil | _ :: Nil => None
-      case h1 :: h2 :: Nil => Some(h1)
-      case h1 :: h2 :: tail => secondToLast2(h2 :: tail)
+      case h1 :: _ :: Nil => Some(h1)
+      case _ :: h2 :: tail => secondToLast2(h2 :: tail)
     }
   }
 
@@ -135,8 +134,12 @@ object ListOperations {
   }
 
 
-  def split(index: Int, list: List[Int]): Option[List[Any]] = {
-    Option(firstSplit(index, list).getOrElse(Nil) :: List(secondSplit(index, list).getOrElse(Nil)))
+  //what is this ?
+  def split(index: Int, list: List[Int]): Option[List[Int]] = {
+    for {
+      firstSplit <- firstSplit(index, list)
+      secondSplit <- secondSplit(index, list)
+    } yield firstSplit ::: secondSplit
   }
 
 
